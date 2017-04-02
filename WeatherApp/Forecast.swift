@@ -45,25 +45,22 @@ class Forecast {
 	
 	init(weatherDict: Dictionary<String, AnyObject>) {
 		
-		if let main = weatherDict["main"] as? Dictionary<String, AnyObject> {
+		if let temp = weatherDict["temp"] as? Dictionary<String, AnyObject> {
 			
-			if let min = main["temp_min"] as? Double {
+			if let min = temp["min"] as? Double {
 				let KelvineToCelcies = (min - 273.15)
-				self._lowTemp = KelvineToCelcies
-				print(self._lowTemp)
+				self._lowTemp = round(KelvineToCelcies)
 			}
 			
-			if let max = main["temp_max"] as? Double {
+			if let max = temp["max"] as? Double {
 				let KelvineToCelcies = (max - 273.15)
-				self._highTemp = KelvineToCelcies
-				print(self._highTemp)
+				self._highTemp = round(KelvineToCelcies)
 			}
 		}
 		
 		if let weather = weatherDict["weather"] as? [Dictionary<String, AnyObject>] {
 			if let main = weather[0]["main"] as? String {
 				self._weatherType = main
-				print(self._weatherType)
 			}
 			
 		}

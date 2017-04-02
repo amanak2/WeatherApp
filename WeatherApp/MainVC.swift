@@ -1,4 +1,4 @@
-//
+ //
 //  ViewController.swift
 //  WeatherApp
 //
@@ -38,12 +38,11 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource,CLLoc
 		
 		currentWeather = CurrentWeather()
 		
-		currentWeather.downloadWeatherData() {
-			self.downloadForcastData {
-				self.updateMainUI()
-			}
-		}
-		
+	}
+	
+	override func viewDidAppear(_ animated: Bool) {
+		super.viewDidAppear(animated)
+		locationAuthStatus()
 	}
 	
 	func locationAuthStatus() {
@@ -51,6 +50,13 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource,CLLoc
 			currentLocation = locationManager.location
 			Location.sharedInstance.latitude = currentLocation.coordinate.latitude
 			Location.sharedInstance.longitude = currentLocation.coordinate.longitude
+			
+			currentWeather.downloadWeatherData() {
+				self.downloadForcastData {
+					self.updateMainUI()
+				}
+			}
+
 			
 		} else {
 			locationManager.requestAlwaysAuthorization()
